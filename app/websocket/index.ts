@@ -2,7 +2,7 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-09-24 17:14:45
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-10-27 19:35:09
+ * @LastEditTime: 2021-10-30 17:03:07
  * @Description: 
  */
 import { WebSocket } from "ws";
@@ -11,11 +11,6 @@ import { MessageProp, MessageType, UserProp } from "./type";
 const WS = require('ws');
 
 const wss = new WS.Server({ port: 7000 });
-
-// 客户端数组 maxLength = 50 时间戳直接作为 id
-const clientArr: UserProp[] = [];
-
-const intervalArr = []
 
 function send(ws: WebSocket, data: MessageProp) {
   ws.send(JSON.stringify(data));
@@ -28,36 +23,40 @@ function boardcast(data: MessageProp) {
   });
 }
 
-
 wss.on('connection', function connection(ws: WebSocket) {
 
-  console.log('!!! System Notice:new connection');
+  console.log('System : new Connection ');
   // @ts-ignore
   heartbeat()
   // 心跳
   function heartbeat() {
     // @ts-ignore
-    clearTimeout(ws.pingTimeout)
+    if (ws.pingTimeout) {
+      // @ts-ignore
+      clearTimeout(ws.pingTimeout)
+    }
     // @ts-ignore
     ws.pingTimeout = setTimeout(() => {
       ws.terminate()
-    }, 3000 + 1000);
+    }, (5 + 2) * 1000);
   }
-  // @ts-ignore
-  ws._interval = setInterval(() => {
-    ws.ping()
-  }, 3000)
 
-  ws.on('pong', () => {
-    heartbeat()
-    console.log("pong")
-  })
 
   ws.on('message', function incoming(data: string) {
     try {
       const tempData = JSON.parse(data)
-      if ((tempData as unknown as MessageProp).type === MessageType.INIT) {
-        // 广播给所有用户正式接入 ws
+      // 每收到消息就重新开始摧毁倒计时
+      heartbeat()
+      // 如果是客户端发送心跳包
+      if ((tempData as unknown as MessageProp).type === MessageType.PING) {
+        const msg: MessageProp = {
+          ...tempData,
+          type: MessageType.PONG,
+          message: 'pong'
+        }
+        send(ws, msg);
+      } else if ((tempData as unknown as MessageProp).type === MessageType.INIT) {
+        // 广播给所有用户
         const other: MessageProp = {
           ...tempData,
           type: MessageType.SYSTEM,
@@ -74,14 +73,9 @@ wss.on('connection', function connection(ws: WebSocket) {
   });
 
   ws.on("close", function close(ws: WebSocket) {
-    console.log('close')
-    console.log(ws)
+    // console.log(ws)
+    // ws?.terminate()
+    console.log('close : ', ws)
+
   })
 });
-
-
-// setInterval(() => {
-//   wss.clients.forEach((client: WebSocket) => {
-//     client.ping()
-//   })
-// }, 3000)
