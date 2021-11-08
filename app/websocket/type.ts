@@ -2,30 +2,26 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-09-27 08:34:01
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-10-30 17:03:38
- * @Description: 
+ * @LastEditTime: 2021-11-07 19:31:23
+ * @Description:
  */
 export enum MessageType {
   // 初始化
-  INIT = 'INIT',
+  INIT = "INIT",
   // 关闭
-  CLOSE = 'CLOSE',
+  CLOSE = "CLOSE",
   // 新用户加入或者其他通知
-  SYSTEM = 'SYSTEM',
+  SYSTEM = "SYSTEM",
   // 其他用户的消息
-  USER = 'USER',
+  USER = "USER",
   // 心跳包
-  PING = 'PING',
-  PONG = 'PONG'
+  PING = "PING",
+  PONG = "PONG",
 }
 
-export interface UserProp {
-  id: string | number;
-  username: string;
-}
+export interface UserProp { }
 
 export interface MessageProp extends UserProp {
-  type: MessageType,
+  type: MessageType;
   message: string | undefined | null;
 }
-

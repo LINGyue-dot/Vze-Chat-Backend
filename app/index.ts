@@ -2,30 +2,32 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-09-24 17:09:43
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-03 18:20:27
+ * @LastEditTime: 2021-11-07 19:23:01
  * @Description:
  */
+
+import { formatError } from "./util/hanler";
 
 const koa = require("koa");
 const cors = require("koa-cors");
 
-const Router = require("koa-router");
+const error = require("koa-json-error");
 
-const router = new Router({ prefix: "/ws" });
-
-const home = require("./controllers/home");
 const bodyParser = require("koa-bodyparser");
 
-router.get("/users", home.getUserList);
-router.get("/messages", home.getMessageList);
-
-router.post("/add", home.addUser);
+const routing = require("./route");
 
 const app = new koa();
 
 app.use(bodyParser());
 
-app.use(cors()).use(router.routes()).use(router.allowedMethods());
+app.use(cors());
+
+app.use(error(formatError));
+
+routing(app);
+
+require('./websocket/index')
 
 const server = app.listen(3100, () =>
   console.log("server start successfully in port 3100")
