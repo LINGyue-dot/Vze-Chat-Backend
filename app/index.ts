@@ -2,7 +2,7 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-09-24 17:09:43
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-07 19:23:01
+ * @LastEditTime: 2021-11-11 00:21:06
  * @Description:
  */
 
@@ -27,7 +27,7 @@ app.use(error(formatError));
 
 routing(app);
 
-require('./websocket/index')
+require("./websocket/index");
 
 const server = app.listen(3100, () =>
   console.log("server start successfully in port 3100")
@@ -35,3 +35,5 @@ const server = app.listen(3100, () =>
 
 const installWebRTC = require("./webrtc");
 installWebRTC(server);
+
+require("./redis/scripts");

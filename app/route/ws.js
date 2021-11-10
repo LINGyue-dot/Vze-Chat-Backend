@@ -12,5 +12,5 @@ const home = require("../controllers/home");
 const router = new Router({ prefix: "/ws" });
 
 router.post("/login", home.login);
-router.get("/contactor", home.getContactor);
+router.get("/contactor", home.getContacter);
 module.exports = router;

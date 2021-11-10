@@ -19,9 +19,9 @@ class Home {
 		}
 	}
 
-	async getContactor(ctx) {
+	async getContacter(ctx) {
 		try {
-			const contactorArr = await Customer.getContactor(
+			const contactorArr = await Customer.getContacter(
 				ctx.request.query.user_id
 			);
 			ctx.body = new Response(200, "", contactorArr);

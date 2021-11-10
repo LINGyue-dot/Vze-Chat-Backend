@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon",
+    "start": "nodemon",
     "commit": "git-cz"
   },
   "author": "qianlong",
@@ -18,12 +18,14 @@
     "koa-router": "^10.1.1",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.13",
+    "redis": "^4.0.0-rc.3",
     "socket.io": "^4.3.1",
     "ws": "^8.2.2"
   },
   "devDependencies": {
     "@types/koa": "^2.13.4",
     "@types/node": "^16.11.6",
+    "@types/redis": "^2.8.32",
     "@types/ws": "^8.2.0",
     "ts-node": "^10.2.1",
     "typescript": "^4.4.3"

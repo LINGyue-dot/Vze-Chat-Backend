@@ -2,7 +2,7 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-11-07 17:39:13
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-08 10:48:28
+ * @LastEditTime: 2021-11-09 11:39:53
  * @Description:
  */
 
@@ -45,7 +45,7 @@ module.exports = {
 	},
 
 	// 获取用户所有联系人
-	getContactor(user_id) {
+	getContacter(user_id) {
 		return new Promise((resolve, reject) => {
 			console.log(user_id);
 			// # 获取用户的联系人，联系人 id 可能再 user_contacter.contacter 可能在 user_contacter.user_id
@@ -68,6 +68,55 @@ module.exports = {
 					resolve(data);
 				}
 			);
+		});
+	},
+
+	// 添加 p2p 的消息
+	addChatMessage(from_user_id, to_user_id, message) {
+		return new Promise((resolve, reject) => {
+			sql.query(
+				`
+					insert into user_contacter_message value(
+						${from_user_id},
+						${to_user_id},
+						${Date.now()},
+						${message}
+					)
+				`,
+				(err, data) => {
+					if (err) {
+						reject(err);
+					}
+					resolve(data);
+				}
+			);
+		});
+	},
+
+	// 获取特定群的用户
+	getBlockMember(block_id) {
+		return new Promise((resolve, reject) => {
+			sql.query(
+				`
+				select user_id from block_user where block_id=${block_id}
+			`,
+				(err, data) => {
+					if (err) {
+						reject(err);
+					}
+					resolve(data);
+				}
+			);
+		});
+	},
+
+	// TODO: 添加群消息
+	addBlockMessage(user_id, at_user_id, block_id, message) {
+		return new Promise((resolve, reject) => {
+			sql.query(`
+				insert into block_message value(
+				)
+			`);
 		});
 	},
 };
