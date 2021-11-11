@@ -2,7 +2,7 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-09-27 08:34:01
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-09 11:59:10
+ * @LastEditTime: 2021-11-11 21:35:33
  * @Description:
  */
 
@@ -39,4 +39,5 @@ export interface MessageProp {
   to_user_id?: string;
   group_id?: string;
   message: string | undefined | null;
+  message_id?: string;
 }

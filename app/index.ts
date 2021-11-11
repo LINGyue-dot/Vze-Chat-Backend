@@ -36,4 +36,3 @@ const server = app.listen(3100, () =>
 const installWebRTC = require("./webrtc");
 installWebRTC(server);
 
-require("./redis/scripts");

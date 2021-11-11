@@ -2,7 +2,7 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-11-07 17:39:13
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-09 11:39:53
+ * @LastEditTime: 2021-11-11 21:37:03
  * @Description:
  */
 
@@ -23,16 +23,15 @@ module.exports = {
 					if (data.length) {
 						resolve(data[0]);
 					} else {
-						const nowTime = Date.now();
 						sql.query(
-							`insert into user values(${nowTime},'${user_name}','')`,
+							`insert into user(user_name) values('${user_name}')`,
 							(err, data) => {
 								if (err) {
 									reject(err);
 								}
 								// 返回这条新创建的数据
 								resolve({
-									user_id: nowTime,
+									user_id: data.insertId,
 									user_name,
 									user_img: "",
 								});
@@ -76,10 +75,11 @@ module.exports = {
 		return new Promise((resolve, reject) => {
 			sql.query(
 				`
-					insert into user_contacter_message value(
+					insert into user_contacter_message
+					(user_id,contacter_id,message)
+					values(
 						${from_user_id},
 						${to_user_id},
-						${Date.now()},
 						${message}
 					)
 				`,
@@ -87,7 +87,7 @@ module.exports = {
 					if (err) {
 						reject(err);
 					}
-					resolve(data);
+					resolve(data.insertId);
 				}
 			);
 		});

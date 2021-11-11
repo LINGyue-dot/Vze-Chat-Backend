@@ -2,7 +2,7 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-11-08 14:45:11
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-08 16:15:13
+ * @LastEditTime: 2021-11-11 21:15:41
  * @Description:
  */
 
@@ -46,7 +46,7 @@ export async function boardcastUserContactor(user_id: string) {
 
   boardcastBlock(onlineContactorList, {
     type: MessageType.SYSTEM,
-    from_user_id: "0",
+    from_user_id: user_id,
     message: "user login",
   });
 }
