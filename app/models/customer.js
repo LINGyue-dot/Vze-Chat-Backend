@@ -2,7 +2,7 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-11-07 17:39:13
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-11 21:37:03
+ * @LastEditTime: 2021-11-15 08:54:23
  * @Description:
  */
 
@@ -20,6 +20,7 @@ module.exports = {
 					if (err) {
 						reject(err);
 					}
+					console.log(data);
 					if (data.length) {
 						resolve(data[0]);
 					} else {
@@ -33,11 +34,37 @@ module.exports = {
 								resolve({
 									user_id: data.insertId,
 									user_name,
-									user_img: "",
+									user_img:
+										"http://qianlon.cn/upload/2021/11/image-c571dd25ab744ff0a954fae2cfe5b61a.png",
 								});
 							}
 						);
 					}
+				}
+			);
+		});
+	},
+	// 获取用户信息
+	getUserInformation(user_id) {
+		return new Promise((resolve, reject) => {
+			sql.query(`select * from user where user_id=${user_id}`, (err, data) => {
+				if (err) {
+					reject(err);
+				}
+				resolve(data);
+			});
+		});
+	},
+	// 获取群信息
+	getBlockInformation(block_id) {
+		return new Promise((resolve, reject) => {
+			sql.query(
+				`select * from block where block_id=${block_id}`,
+				(err, data) => {
+					if (err) {
+						reject(err);
+					}
+					resolve(data);
 				}
 			);
 		});
@@ -71,13 +98,14 @@ module.exports = {
 	},
 
 	// 添加 p2p 的消息
-	addChatMessage(from_user_id, to_user_id, message) {
+	addChatMessage(message_id, from_user_id, to_user_id, message) {
 		return new Promise((resolve, reject) => {
 			sql.query(
 				`
 					insert into user_contacter_message
-					(user_id,contacter_id,message)
+					(contacter_message_id,user_id,contacter_id,message)
 					values(
+						${message_id},
 						${from_user_id},
 						${to_user_id},
 						${message}
@@ -87,7 +115,7 @@ module.exports = {
 					if (err) {
 						reject(err);
 					}
-					resolve(data.insertId);
+					resolve(true);
 				}
 			);
 		});

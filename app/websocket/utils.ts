@@ -2,13 +2,14 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-11-08 14:45:11
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-11 21:15:41
+ * @LastEditTime: 2021-11-15 11:07:28
  * @Description:
  */
 
 import { WebSocket } from "ws";
 import { getContacter } from "../controllers/home";
-import { MessageProp, MessageType } from "./type";
+import { pushRedisValue } from "../redis/utils";
+import { MessageProp, MessageType, P2PMessageProp } from "./type";
 import { onlineUser, UserMapProp } from "./userMap";
 
 const Cosumer = require("../models/customer");
@@ -53,8 +54,7 @@ export async function boardcastUserContactor(user_id: string) {
 
 // 发送消息给特定用户
 // 如果该用户不在线则将数据放入 redis 中
-
-export function sendToSpecialUser(message: MessageProp) {
+export function sendToSpecialUser(message: P2PMessageProp) {
   let flag = false;
   onlineUser.forEach(user => {
     if (message.to_user_id === user.user_id) {
@@ -66,5 +66,6 @@ export function sendToSpecialUser(message: MessageProp) {
   // 如果该用户不在线
   // 数据存到 redis 中
   if (!flag) {
+    pushRedisValue(`offline_message_${message.from_user_id}`, message);
   }
 }

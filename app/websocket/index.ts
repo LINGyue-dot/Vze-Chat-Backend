@@ -2,14 +2,21 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-09-24 17:14:45
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-11 18:05:21
+ * @LastEditTime: 2021-11-15 11:10:10
  * @Description:
  */
 import { WebSocket } from "ws";
 import { chatBlock } from "./block";
+import { confirmMessage } from "./confirm";
 import { heartbeat, sendPong } from "./heartbeat";
 import { chatP2P } from "./p2p";
-import { ChatType, MessageProp, MessageType } from "./type";
+import {
+	BlockMessageProp,
+	ChatType,
+	MessageProp,
+	MessageType,
+	P2PMessageProp,
+} from "./type";
 import { addOnlineUser, leaveOnlineUser } from "./userMap";
 import { boardcastUserContactor } from "./utils";
 
@@ -41,14 +48,16 @@ wss.on("connection", function connection(ws: WebSocket) {
 				boardcastUserContactor(message.from_user_id);
 				break;
 			case MessageType.MESSAGE:
+				// 确认消息
+				confirmMessage(ws, message);
 				// 中转转发消息
 				// p2p
 				// block
-				if (message.chat_type === ChatType.PTP) {
-					chatP2P(message);
+				if ((message as P2PMessageProp).chat_type === ChatType.PTP) {
+					chatP2P(message as P2PMessageProp);
 				}
-				if (message.chat_type === ChatType.BLOCK) {
-					chatBlock(message);
+				if ((message as BlockMessageProp).chat_type === ChatType.BLOCK) {
+					chatBlock(message as BlockMessageProp);
 				}
 				break;
 			case MessageType.CLOSE:
