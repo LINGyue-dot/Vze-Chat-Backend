@@ -2,7 +2,7 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-09-27 17:32:39
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-15 08:56:09
+ * @LastEditTime: 2021-11-17 01:07:30
  * @Description:
  */
 
@@ -58,7 +58,6 @@ class Home {
 			const chatRoomList = (
 				await getConversationList(ctx.request.query.user_id)
 			).map(item => JSON.parse(item));
-			console.log(chatRoomList);
 			ctx.body = new Response(200, "", chatRoomList);
 		} catch (e) {
 			throw e;

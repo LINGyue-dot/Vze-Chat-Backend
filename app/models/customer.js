@@ -2,7 +2,7 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-11-07 17:39:13
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-15 08:54:23
+ * @LastEditTime: 2021-11-17 00:57:27
  * @Description:
  */
 
@@ -73,6 +73,7 @@ module.exports = {
 	// 获取用户所有联系人
 	getContacter(user_id) {
 		return new Promise((resolve, reject) => {
+			console.log("------------");
 			console.log(user_id);
 			// # 获取用户的联系人，联系人 id 可能再 user_contacter.contacter 可能在 user_contacter.user_id
 			sql.query(
@@ -91,6 +92,7 @@ module.exports = {
 					if (err) {
 						reject(err);
 					}
+					console.log(data);
 					resolve(data);
 				}
 			);

@@ -2,18 +2,28 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-11-08 14:45:11
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-15 11:07:28
+ * @LastEditTime: 2021-11-18 01:10:45
  * @Description:
  */
 
 import { WebSocket } from "ws";
 import { getContacter } from "../controllers/home";
+import { addTempMessage, pushOfflineMessage } from "../redis/scripts";
 import { pushRedisValue } from "../redis/utils";
-import { MessageProp, MessageType, P2PMessageProp } from "./type";
-import { onlineUser, UserMapProp } from "./userMap";
+import { addTempTimer } from "./reliable";
+import {
+  BlockMessageProp,
+  MessageProp,
+  MessageType,
+  P2PMessageProp,
+  SendMessageProp,
+} from "./type";
+import { addOnlineUser, onlineUser, UserMapProp } from "./userMap";
 
 const Cosumer = require("../models/customer");
 
+// 向客户端转发消息，保证可靠传输
+//
 export function send(ws: WebSocket, data: MessageProp) {
   ws.send(JSON.stringify(data));
 }
@@ -28,7 +38,7 @@ export function boardcastAll(data: MessageProp) {
 // 向群内所有用户广播
 export function boardcastBlock(userList: UserMapProp[], data: MessageProp) {
   userList.forEach(obj => {
-    send(obj.ws_instance, data);
+    // sendToSpecialUser(obj.ws_instance, data);
   });
 }
 
@@ -54,11 +64,21 @@ export async function boardcastUserContactor(user_id: string) {
 
 // 发送消息给特定用户
 // 如果该用户不在线则将数据放入 redis 中
-export function sendToSpecialUser(message: P2PMessageProp) {
+// 在线则需要保证可靠传输
+// 1. 将其推入 待确认消息队列中
+// 2. 启动重传倒计时
+export function sendToSpecialUser(
+  message: P2PMessageProp | BlockMessageProp,
+  user_id: string
+) {
   let flag = false;
   onlineUser.forEach(user => {
-    if (message.to_user_id === user.user_id) {
+    if (user_id == user.user_id) {
       flag = true;
+      // 推入待确认消息队列中
+      addTempMessage(message);
+      // 启动重传倒计时
+      addTempTimer(message, user_id);
       send(user.ws_instance, message);
     }
   });
@@ -66,6 +86,6 @@ export function sendToSpecialUser(message: P2PMessageProp) {
   // 如果该用户不在线
   // 数据存到 redis 中
   if (!flag) {
-    pushRedisValue(`offline_message_${message.from_user_id}`, message);
+    pushOfflineMessage(user_id, message);
   }
 }

@@ -2,7 +2,7 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-11-08 14:40:52
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-08 15:25:44
+ * @LastEditTime: 2021-11-17 01:20:39
  * @Description: 用户与 ws 映射表
  */
 
@@ -23,6 +23,8 @@ export function addOnlineUser(user_id: string, ws: WebSocket) {
     user_id,
     ws_instance: ws,
   });
+  console.log('add online user')
+  // console.log(onlineUser)
 }
 
 // 去除在线成员
