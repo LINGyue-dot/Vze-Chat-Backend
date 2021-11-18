@@ -2,7 +2,7 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-11-08 14:45:11
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-18 01:10:45
+ * @LastEditTime: 2021-11-18 19:12:15
  * @Description:
  */
 
@@ -35,10 +35,12 @@ export function boardcastAll(data: MessageProp) {
   });
 }
 // 群内广播
-// 向群内所有用户广播
+// 向群内其他用户广播
 export function boardcastBlock(userList: UserMapProp[], data: MessageProp) {
   userList.forEach(obj => {
-    // sendToSpecialUser(obj.ws_instance, data);
+    if (obj.user_id != data.from_user_id) {
+      sendToSpecialUser(data as BlockMessageProp, obj.user_id);
+    }
   });
 }
 
