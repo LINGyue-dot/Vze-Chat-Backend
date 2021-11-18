@@ -2,7 +2,7 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-09-24 17:14:45
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-18 01:05:21
+ * @LastEditTime: 2021-11-18 18:51:36
  * @Description:
  */
 import { WebSocket } from "ws";
@@ -53,6 +53,7 @@ wss.on("connection", function connection(ws: WebSocket) {
 				// boardcastUserContactor(message.from_user_id);
 				break;
 			case MessageType.MESSAGE:
+				console.log(message);
 				// 分配 id 以及返回 id 以及确认消息 id
 				// 注意这里的确认消息 id 利用指针在 confirmMessage 中为其添加了
 				if (await confirmMessage(ws, message as SendMessageProp)) {

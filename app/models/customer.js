@@ -2,7 +2,7 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-11-07 17:39:13
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-17 00:57:27
+ * @LastEditTime: 2021-11-18 15:19:51
  * @Description:
  */
 
@@ -24,12 +24,15 @@ module.exports = {
 					if (data.length) {
 						resolve(data[0]);
 					} else {
+						// 新创建用户
 						sql.query(
 							`insert into user(user_name) values('${user_name}')`,
 							(err, data) => {
 								if (err) {
 									reject(err);
 								}
+								// 每个用户都加入整个大群
+								addToBlock(1, data.insertId);
 								// 返回这条新创建的数据
 								resolve({
 									user_id: data.insertId,
@@ -44,6 +47,13 @@ module.exports = {
 			);
 		});
 	},
+
+	addToBlock(user_id, block_id) {
+		return new Promise((resolve, reject) => {
+			sql.query(`insert into block_user values(${block_id},${user_id})`);
+		});
+	},
+
 	// 获取用户信息
 	getUserInformation(user_id) {
 		return new Promise((resolve, reject) => {

@@ -2,7 +2,7 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-11-08 15:52:08
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-14 20:28:21
+ * @LastEditTime: 2021-11-18 18:52:21
  * @Description: 群聊天
  */
 
@@ -15,5 +15,6 @@ const Customer = require("../models/customer");
 // 
 export async function chatBlock(message: BlockMessageProp) {
   const userList = await Customer.getBlockMember(message.block_id);
+
 
 }
