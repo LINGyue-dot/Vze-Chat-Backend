@@ -2,7 +2,7 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-11-10 23:25:31
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-18 15:22:42
+ * @LastEditTime: 2021-11-25 20:30:35
  * @Description:
  */
 
@@ -96,6 +96,6 @@ export const setEleToMaxScore = async (user_id: string, data: ChatRoomProp) => {
 
 // 获取会话列表
 export const getConversationList = async (user_id: string) => {
-  return await getZset(`conversation:chat_room_${user_id}`);
+  return (await getZset(`conversation:chat_room_${user_id}`)).reverse();
 };
 /*************** 会话列表 *************************/

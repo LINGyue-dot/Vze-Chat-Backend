@@ -2,7 +2,7 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-09-27 17:32:39
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-18 15:47:22
+ * @LastEditTime: 2021-11-25 15:00:06
  * @Description:
  */
 
@@ -28,6 +28,7 @@ class Home {
 			const contactorArr = await Customer.getContacter(
 				ctx.request.query.user_id
 			);
+			console.log(contactorArr);
 			ctx.body = new Response(200, "", contactorArr);
 		} catch (e) {
 			throw e;

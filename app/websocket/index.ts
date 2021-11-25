@@ -2,7 +2,7 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-09-24 17:14:45
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-18 18:51:36
+ * @LastEditTime: 2021-11-25 20:28:29
  * @Description:
  */
 import { WebSocket } from "ws";
@@ -22,7 +22,7 @@ import {
 	SendMessageProp,
 } from "./type";
 import { addOnlineUser, leaveOnlineUser } from "./userMap";
-import { boardcastUserContactor } from "./utils";
+import { boardcastUserContactor, sendOfflineMessage } from "./utils";
 
 const WS = require("ws");
 
@@ -47,6 +47,10 @@ wss.on("connection", function connection(ws: WebSocket) {
 			case MessageType.INIT:
 				// 初始化前端传来 user_id 存储数据
 				addOnlineUser(message.from_user_id, ws);
+
+				// 初始化时候传输该用户的离线消息给该用户
+				sendOfflineMessage(message.from_user_id, ws);
+
 				// 新用户加入通知其他用户
 				// 只广播该用户的联系人与群内成员
 				// 检索出该用户的联系人并直接广播。当用户打开某个群时候，向服务端请求该群在线的成员

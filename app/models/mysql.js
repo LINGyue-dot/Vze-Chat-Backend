@@ -2,7 +2,7 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-11-07 16:55:36
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-07 18:56:58
+ * @LastEditTime: 2021-11-20 18:48:43
  * @Description:
  */
 
@@ -13,6 +13,7 @@ const connection = mysql.createConnection({
 	user: "vze",
 	password: "csz51628@+",
 	database: "vze_db",
+	charset: "utf8mb4",
 });
 
 connection.connect(function (err) {

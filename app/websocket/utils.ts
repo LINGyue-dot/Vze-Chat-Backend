@@ -2,13 +2,18 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-11-08 14:45:11
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-18 19:12:15
+ * @LastEditTime: 2021-11-25 20:26:37
  * @Description:
  */
 
 import { WebSocket } from "ws";
 import { getContacter } from "../controllers/home";
-import { addTempMessage, pushOfflineMessage } from "../redis/scripts";
+import {
+  addTempMessage,
+  clearOfflineMessage,
+  pullOfflineMessage,
+  pushOfflineMessage,
+} from "../redis/scripts";
 import { pushRedisValue } from "../redis/utils";
 import { addTempTimer } from "./reliable";
 import {
@@ -89,5 +94,22 @@ export function sendToSpecialUser(
   // 数据存到 redis 中
   if (!flag) {
     pushOfflineMessage(user_id, message);
+  }
+}
+
+// 给该用户发送离线消息
+// 加入待确认消息队列，启动重传倒计时
+export async function sendOfflineMessage(user_id: string, ws: WebSocket) {
+  try {
+    const list = await pullOfflineMessage(user_id);
+    list.forEach(item => {
+      const tempMsg = JSON.parse(item);
+      addTempMessage(tempMsg);
+      addTempTimer(tempMsg, user_id);
+      send(ws, tempMsg);
+    });
+    clearOfflineMessage(user_id);
+  } catch (e) {
+    console.error(e);
   }
 }

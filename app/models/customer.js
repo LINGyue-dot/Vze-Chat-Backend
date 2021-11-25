@@ -2,7 +2,7 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-11-07 17:39:13
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-18 15:19:51
+ * @LastEditTime: 2021-11-25 19:49:51
  * @Description:
  */
 
@@ -48,6 +48,7 @@ module.exports = {
 		});
 	},
 
+	// 加入群
 	addToBlock(user_id, block_id) {
 		return new Promise((resolve, reject) => {
 			sql.query(`insert into block_user values(${block_id},${user_id})`);
@@ -83,8 +84,6 @@ module.exports = {
 	// 获取用户所有联系人
 	getContacter(user_id) {
 		return new Promise((resolve, reject) => {
-			console.log("------------");
-			console.log(user_id);
 			// # 获取用户的联系人，联系人 id 可能再 user_contacter.contacter 可能在 user_contacter.user_id
 			sql.query(
 				` select *
@@ -102,7 +101,6 @@ module.exports = {
 					if (err) {
 						reject(err);
 					}
-					console.log(data);
 					resolve(data);
 				}
 			);
@@ -112,6 +110,7 @@ module.exports = {
 	// 添加 p2p 的消息
 	addChatMessage(message_id, from_user_id, to_user_id, message) {
 		return new Promise((resolve, reject) => {
+			console.log(message);
 			sql.query(
 				`
 					insert into user_contacter_message
@@ -153,9 +152,9 @@ module.exports = {
 	// TODO: 添加群消息
 	addBlockMessage(user_id, at_user_id, block_id, message) {
 		return new Promise((resolve, reject) => {
+			at_user_id = at_user_id ? at_user_id : null;
 			sql.query(`
-				insert into block_message value(
-				)
+				insert into block_message(block_message_id,block_id,user_id,at_user_id,message) values(${message.message_id},${block_id},${user_id},${at_user_id},'${message.message}')
 			`);
 		});
 	},
