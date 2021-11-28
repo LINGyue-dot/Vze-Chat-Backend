@@ -5,7 +5,7 @@
  * @LastEditTime: 2021-11-20 18:48:43
  * @Description:
  */
-
+// @ts-nocheck
 const mysql = require("mysql");
 
 const connection = mysql.createConnection({

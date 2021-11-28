@@ -2,10 +2,9 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-11-09 20:46:48
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-17 18:34:28
+ * @LastEditTime: 2021-11-28 22:12:22
  * @Description:
  */
-import { ZMember } from "redis/dist/lib/commands/generic-transformers";
 import { ConversationProp, MessageProp } from "../websocket/type";
 import client from "./connection";
 import { ChatRoomProp } from "./type";
@@ -36,7 +35,7 @@ export const addZset = async (
   score: number,
   data: ChatRoomProp | string
 ) => {
-  let tempDat: ZMember = {
+  let tempDat = {
     score,
     value: JSON.stringify(data) || "{}",
   };

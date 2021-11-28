@@ -5,7 +5,7 @@
  * @LastEditTime: 2021-11-28 17:35:45
  * @Description:
  */
-
+// @ts-nocheck
 const { findContacter, findBlock } = require("../models/customer");
 const Customer = require("../models/customer");
 const { getConversationList, setEleToMaxScore } = require("../redis/scripts");

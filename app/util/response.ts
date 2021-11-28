@@ -5,7 +5,7 @@
  * @LastEditTime: 2021-11-07 18:47:04
  * @Description:
  */
-
+// @ts-nocheck
 // {
 //   code:200,
 //   message:error,

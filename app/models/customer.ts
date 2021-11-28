@@ -7,7 +7,7 @@
  */
 
 // type ResultFn = (error: Error | null, data: any) => void;
-
+// @ts-nocheck
 const sql = require("./mysql");
 
 module.exports = {

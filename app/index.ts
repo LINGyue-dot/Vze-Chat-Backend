@@ -2,11 +2,11 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-09-24 17:09:43
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-11 00:21:06
+ * @LastEditTime: 2021-11-28 23:01:44
  * @Description:
  */
 
-import { formatError } from "./util/hanler";
+const { formatError } = require("./util/hanler");
 
 const koa = require("koa");
 const cors = require("koa-cors");
@@ -35,4 +35,3 @@ const server = app.listen(3100, () =>
 
 const installWebRTC = require("./webrtc");
 installWebRTC(server);
-

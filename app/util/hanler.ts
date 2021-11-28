@@ -5,7 +5,7 @@
  * @LastEditTime: 2021-11-07 19:26:10
  * @Description:
  */
-
+// @ts-nocheck
 module.exports = {
 	formatError(err) {
 		return {

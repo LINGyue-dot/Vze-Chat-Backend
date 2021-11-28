@@ -5,7 +5,7 @@
  * @LastEditTime: 2021-11-07 18:58:47
  * @Description:
  */
-
+// @ts-nocheck
 const fs = require("fs");
 
 module.exports = app => {
