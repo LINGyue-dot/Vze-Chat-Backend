@@ -2,12 +2,11 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-11-08 14:45:11
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-28 17:48:26
+ * @LastEditTime: 2021-11-28 23:35:14
  * @Description:
  */
 
 import { WebSocket } from "ws";
-import { getContacterList } from "../controllers/home";
 import {
   addTempMessage,
   clearOfflineMessage,

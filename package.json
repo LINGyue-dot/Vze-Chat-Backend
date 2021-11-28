@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "build": "tsc -w"
   },
   "author": "qianlong",
   "license": "ISC",

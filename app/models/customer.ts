@@ -5,7 +5,7 @@
  * @LastEditTime: 2021-11-28 21:15:16
  * @Description:
  */
-
+// @ts-nocheck
 // type ResultFn = (error: Error | null, data: any) => void;
 
 const sql = require("./mysql");
