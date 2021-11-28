@@ -2,7 +2,7 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-11-07 17:39:13
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-25 19:49:51
+ * @LastEditTime: 2021-11-28 21:15:16
  * @Description:
  */
 
@@ -32,7 +32,7 @@ module.exports = {
 									reject(err);
 								}
 								// 每个用户都加入整个大群
-								addToBlock(1, data.insertId);
+								this.addToBlock(1, data.insertId).catch(e => reject(e));
 								// 返回这条新创建的数据
 								resolve({
 									user_id: data.insertId,
@@ -51,7 +51,15 @@ module.exports = {
 	// 加入群
 	addToBlock(user_id, block_id) {
 		return new Promise((resolve, reject) => {
-			sql.query(`insert into block_user values(${block_id},${user_id})`);
+			sql.query(
+				`insert into block_user values(${block_id},${user_id})`,
+				(err, data) => {
+					if (err) {
+						reject(err);
+					}
+					resolve(data);
+				}
+			);
 		});
 	},
 
@@ -107,6 +115,22 @@ module.exports = {
 		});
 	},
 
+	// 获取用户的所有 block
+	getBlock(user_id) {
+		return new Promise((resolve, reject) => {
+			sql.query(
+				`select *
+from block, block_user where block.block_id=block_user.block_id and block_user.user_id=${user_id}`,
+				(err, data) => {
+					if (err) {
+						reject(err);
+					}
+					resolve(data);
+				}
+			);
+		});
+	},
+
 	// 添加 p2p 的消息
 	addChatMessage(message_id, from_user_id, to_user_id, message) {
 		return new Promise((resolve, reject) => {
@@ -149,13 +173,93 @@ module.exports = {
 		});
 	},
 
-	// TODO: 添加群消息
 	addBlockMessage(user_id, at_user_id, block_id, message) {
 		return new Promise((resolve, reject) => {
 			at_user_id = at_user_id ? at_user_id : null;
 			sql.query(`
 				insert into block_message(block_message_id,block_id,user_id,at_user_id,message) values(${message.message_id},${block_id},${user_id},${at_user_id},'${message.message}')
 			`);
+		});
+	},
+
+	// 查找联系人
+	findContacter(user_name) {
+		return new Promise((resolve, reject) => {
+			sql.query(
+				`select * from user where user_name like '%${user_name}%'`,
+				(err, data) => {
+					if (err) {
+						reject(err);
+					}
+					resolve(data);
+				}
+			);
+		});
+	},
+	// 查找群
+	findBlock(block_name) {
+		return new Promise((resolve, reject) => {
+			sql.query(
+				`select * from block where block_name like '%${block_name}%'`,
+				(err, data) => {
+					if (err) {
+						reject(err);
+					}
+					resolve(data);
+				}
+			);
+		});
+	},
+
+	// 添加好友
+	addUserContacter(user_id, contacter_id) {
+		return new Promise((resolve, reject) => {
+			sql.query(
+				`insert into user_contacter value(${user_id},${contacter_id})`,
+				(err, data) => {
+					if (err) {
+						reject(err);
+					}
+					resolve(data);
+				}
+			);
+		});
+	},
+
+	// 加群
+	joinUserBlock(user_id, block_id) {
+		return new Promise((resolve, reject) => {
+			sql.query(
+				`insert into block_user value(${block_id},${user_id})`,
+				(err, data) => {
+					if (err) {
+						reject(err);
+					}
+					resolve(data);
+				}
+			);
+		});
+	},
+
+	// 新建群
+	addBlock(user_id, block_name) {
+		return new Promise((resolve, reject) => {
+			sql.query(
+				// value(${block_name},${user_id})
+				`INSERT INTO block SET ?`,
+				{ block_name, owner_id: user_id },
+				(err, data) => {
+					if (err) {
+						console.log(err);
+						reject(err);
+					}
+					resolve({
+						block_id: data.insertId,
+						block_name: block_name,
+						owner_id: user_id,
+					});
+				}
+			);
 		});
 	},
 };

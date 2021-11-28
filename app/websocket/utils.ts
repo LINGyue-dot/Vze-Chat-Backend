@@ -2,12 +2,12 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-11-08 14:45:11
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-25 20:26:37
+ * @LastEditTime: 2021-11-28 17:48:26
  * @Description:
  */
 
 import { WebSocket } from "ws";
-import { getContacter } from "../controllers/home";
+import { getContacterList } from "../controllers/home";
 import {
   addTempMessage,
   clearOfflineMessage,
@@ -51,7 +51,7 @@ export function boardcastBlock(userList: UserMapProp[], data: MessageProp) {
 
 // 广播给该用户的在线联系人
 export async function boardcastUserContactor(user_id: string) {
-  const contactorList = await Cosumer.getContacter(user_id);
+  const contactorList = await Cosumer.getContacterList(user_id);
   const onlineContactorList: UserMapProp[] = [];
   contactorList.forEach((user: any) => {
     for (let i = 0; i < onlineUser.length; i++) {
