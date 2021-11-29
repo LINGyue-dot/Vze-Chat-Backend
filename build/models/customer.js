@@ -3,7 +3,7 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-11-07 17:39:13
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-28 21:15:16
+ * @LastEditTime: 2021-11-29 10:38:30
  * @Description:
  */
 // @ts-nocheck
@@ -101,7 +101,8 @@ module.exports = {
     addChatMessage: function (message_id, from_user_id, to_user_id, message) {
         return new Promise(function (resolve, reject) {
             console.log(message);
-            sql.query("\n\t\t\t\t\tinsert into user_contacter_message\n\t\t\t\t\t(contacter_message_id,user_id,contacter_id,message)\n\t\t\t\t\tvalues(\n\t\t\t\t\t\t" + message_id + ",\n\t\t\t\t\t\t" + from_user_id + ",\n\t\t\t\t\t\t" + to_user_id + ",\n\t\t\t\t\t\t" + message + "\n\t\t\t\t\t)\n\t\t\t\t", function (err, data) {
+            message = message.replaceAll("'", "'").replaceAll("\"", "\"");
+            sql.query("\n\t\t\t\t\tinsert into user_contacter_message\n\t\t\t\t\t(contacter_message_id,user_id,contacter_id,message)\n\t\t\t\t\tvalues(\n\t\t\t\t\t\t" + message_id + ",\n\t\t\t\t\t\t" + (from_user_id || 1) + ",\n\t\t\t\t\t\t" + (to_user_id || 2) + ",\n\t\t\t\t\t\t'" + message + "'\n\t\t\t\t\t)\n\t\t\t\t", function (err, data) {
                 if (err) {
                     reject(err);
                 }

@@ -3,7 +3,7 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-11-08 14:45:11
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-28 23:35:14
+ * @LastEditTime: 2021-11-29 10:17:59
  * @Description:
  */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -134,10 +134,12 @@ function sendOfflineMessage(user_id, ws) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
+                    console.log("开始推送离线消息给用户" + user_id);
                     return [4 /*yield*/, (0, scripts_1.pullOfflineMessage)(user_id)];
                 case 1:
                     list = _a.sent();
                     list.forEach(function (item) {
+                        console.log(item);
                         var tempMsg = JSON.parse(item);
                         (0, scripts_1.addTempMessage)(tempMsg);
                         (0, reliable_1.addTempTimer)(tempMsg, user_id);

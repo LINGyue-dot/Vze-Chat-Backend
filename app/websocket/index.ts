@@ -2,7 +2,7 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-09-24 17:14:45
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-25 20:28:29
+ * @LastEditTime: 2021-11-29 12:58:27
  * @Description:
  */
 import { WebSocket } from "ws";
@@ -23,6 +23,7 @@ import {
 } from "./type";
 import { addOnlineUser, leaveOnlineUser } from "./userMap";
 import { boardcastUserContactor, sendOfflineMessage } from "./utils";
+const { sendInitMessage } = require("../util/initMessage");
 
 const WS = require("ws");
 
@@ -48,6 +49,7 @@ wss.on("connection", function connection(ws: WebSocket) {
 				// 初始化前端传来 user_id 存储数据
 				addOnlineUser(message.from_user_id, ws);
 
+				sendInitMessage(message.from_user_id);
 				// 初始化时候传输该用户的离线消息给该用户
 				sendOfflineMessage(message.from_user_id, ws);
 
@@ -57,12 +59,12 @@ wss.on("connection", function connection(ws: WebSocket) {
 				// boardcastUserContactor(message.from_user_id);
 				break;
 			case MessageType.MESSAGE:
-				console.log(message);
 				// 分配 id 以及返回 id 以及确认消息 id
 				// 注意这里的确认消息 id 利用指针在 confirmMessage 中为其添加了
 				if (await confirmMessage(ws, message as SendMessageProp)) {
 					break;
 				}
+
 				// TODO 记录 temp_id 与分配的 id map 防止消息重发
 				// 中转转发消息
 				// p2p

@@ -2,7 +2,7 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-09-27 17:32:39
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-28 17:35:45
+ * @LastEditTime: 2021-11-29 11:37:26
  * @Description:
  */
 // @ts-nocheck
@@ -10,6 +10,7 @@ const { findContacter, findBlock } = require("../models/customer");
 const Customer = require("../models/customer");
 const { getConversationList, setEleToMaxScore } = require("../redis/scripts");
 const Response = require("../util/response");
+const { sendInitMessage } = require("../util/initMessage");
 
 class Home {
 	async login(ctx) {
@@ -17,6 +18,9 @@ class Home {
 			const user = await Customer.login(ctx.request.body.name);
 			// 加入会话列表
 			await setEleToMaxScore(user.user_id, { block_id: "1" });
+			await setEleToMaxScore(user.user_id, { contacter_id: "1" });
+			// 发送一条介绍的消息
+			sendInitMessage(user.user_id);
 			ctx.body = new Response(200, "", user);
 			console.log(ctx.body);
 		} catch (e) {

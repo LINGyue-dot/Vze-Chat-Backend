@@ -83,15 +83,16 @@ wss.on("connection", function connection(ws) {
                         // 检索出该用户的联系人并直接广播。当用户打开某个群时候，向服务端请求该群在线的成员
                         // boardcastUserContactor(message.from_user_id);
                         return [3 /*break*/, 8];
-                    case 3:
-                        console.log(message);
-                        return [4 /*yield*/, (0, confirm_1.confirmMessage)(ws, message)];
+                    case 3: return [4 /*yield*/, (0, confirm_1.confirmMessage)(ws, message)];
                     case 4:
                         // 分配 id 以及返回 id 以及确认消息 id
                         // 注意这里的确认消息 id 利用指针在 confirmMessage 中为其添加了
                         if (_b.sent()) {
                             return [3 /*break*/, 8];
                         }
+                        console.log("66---------------");
+                        console.log(message);
+                        console.log("66---------------");
                         // TODO 记录 temp_id 与分配的 id map 防止消息重发
                         // 中转转发消息
                         // p2p

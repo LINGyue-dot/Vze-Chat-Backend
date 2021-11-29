@@ -2,7 +2,7 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-11-08 14:45:11
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-28 23:35:14
+ * @LastEditTime: 2021-11-29 11:00:33
  * @Description:
  */
 
@@ -100,8 +100,10 @@ export function sendToSpecialUser(
 // 加入待确认消息队列，启动重传倒计时
 export async function sendOfflineMessage(user_id: string, ws: WebSocket) {
   try {
+    console.log("开始推送离线消息给用户" + user_id);
     const list = await pullOfflineMessage(user_id);
-    list.forEach(item => {
+    list.forEach((item: any) => {
+      console.log(item);
       const tempMsg = JSON.parse(item);
       addTempMessage(tempMsg);
       addTempTimer(tempMsg, user_id);

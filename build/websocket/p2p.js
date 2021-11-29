@@ -3,7 +3,7 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-11-08 15:52:03
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-20 18:36:25
+ * @LastEditTime: 2021-11-29 10:25:08
  * @Description: p2p 聊天
  */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -54,13 +54,18 @@ var Customer = require("../models/customer");
 function chatP2P(message) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
-            Customer.addChatMessage(message.message_id, message.from_user_id, message.to_user_id, message.message);
-            // TODO 更新 redis 会话列表，添加 / 上升会话
-            (0, scripts_1.setEleToMaxScore)(message.from_user_id, {
-                contacter_id: message.to_user_id,
-            });
-            // 发送消息
-            (0, utils_1.sendToSpecialUser)(message, message.to_user_id);
+            try {
+                Customer.addChatMessage(message.message_id, message.from_user_id, message.to_user_id, message.message);
+                // TODO 更新 redis 会话列表，添加 / 上升会话
+                (0, scripts_1.setEleToMaxScore)(message.from_user_id, {
+                    contacter_id: message.to_user_id,
+                });
+                // 发送消息
+                (0, utils_1.sendToSpecialUser)(message, message.to_user_id);
+            }
+            catch (e) {
+                console.error(e);
+            }
             return [2 /*return*/];
         });
     });
