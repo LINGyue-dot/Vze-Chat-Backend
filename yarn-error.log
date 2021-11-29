@@ -1,11 +1,11 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\16356\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add -D @types/fs
+  C:\Program Files\nodejs\node.exe C:\Users\16356\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js start
 
 PATH: 
-  E:\Project\Vze-Chat\vze-chat-backend\node_modules\.bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\nodejs\;E:\Software\Xshell\;E:\Software\Xftp\;E:\Software\Git\cmd;C:\Program Files\Go\bin;C:\Users\16356\AppData\Local\Microsoft\WindowsApps;C:\Users\16356\AppData\Roaming\npm;E:\Microsoft VS Code\bin;E:\WebStorm 2021.2.2\bin;;E:\Software\CLion 2021.2.2\bin;;C:\Program Files\Bandizip\;C:\Users\16356\go\bin;E:\Software\GoLand 2021.2.3\bin;;E:\Software\DataGrip 2021.2.4\bin;
+  C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\nodejs\;E:\Software\Xshell\;E:\Software\Xftp\;E:\Software\Git\cmd;C:\Program Files\Go\bin;C:\ProgramData\ComposerSetup\bin;C:\Users\16356\scoop\shims;C:\Users\16356\AppData\Local\Microsoft\WindowsApps;C:\Users\16356\AppData\Roaming\npm;E:\Microsoft VS Code\bin;E:\WebStorm 2021.2.2\bin;E:\Software\CLion 2021.2.2\bin;C:\Program Files\Bandizip\;C:\Users\16356\go\bin;E:\Software\GoLand 2021.2.3\bin;E:\Software\DataGrip 2021.2.4\bin;C:\php;C:\Users\16356\AppData\Roaming\Composer\vendor\bin
 
 Yarn version: 
-  1.22.11
+  1.22.17
 
 Node version: 
   14.17.6
@@ -14,17 +14,12 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.npm.taobao.org/@types%2ffs: Not found
-      at Request.params.callback [as _callback] (C:\Users\16356\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66992:18)
-      at Request.self.callback (C:\Users\16356\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140763:22)
-      at Request.emit (events.js:400:28)
-      at Request.<anonymous> (C:\Users\16356\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141735:10)
-      at Request.emit (events.js:400:28)
-      at IncomingMessage.<anonymous> (C:\Users\16356\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141657:12)
-      at Object.onceWrapper (events.js:519:28)
-      at IncomingMessage.emit (events.js:412:35)
-      at endReadableNT (internal/streams/readable.js:1317:12)
-      at processTicksAndRejections (internal/process/task_queues.js:82:21)
+  SyntaxError: E:\Project\Vze-Chat\vze-chat-backend\package.json: Unexpected token / in JSON at position 865
+      at JSON.parse (<anonymous>)
+      at C:\Users\16356\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (C:\Users\16356\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:310:30)
+      at C:\Users\16356\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:321:13
 
 npm manifest: 
   {
@@ -34,8 +29,10 @@ npm manifest:
     "main": "index.js",
     "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1",
-      "server": "nodemon",
-      "commit": "git-cz"
+      "start": "nodemon",
+      "commit": "git-cz",
+      "build": "tsc -w",
+      "dev": "tsc -w && nodemon build/index.js"
     },
     "author": "qianlong",
     "license": "ISC",
@@ -43,18 +40,23 @@ npm manifest:
       "koa": "^2.13.3",
       "koa-bodyparser": "^4.3.0",
       "koa-cors": "^0.0.16",
+      "koa-json-error": "^3.1.2",
       "koa-router": "^10.1.1",
       "mysql": "^2.18.1",
       "nodemon": "^2.0.13",
+      "redis": "^4.0.0-rc.3",
       "socket.io": "^4.3.1",
       "ws": "^8.2.2"
     },
     "devDependencies": {
       "@types/koa": "^2.13.4",
+      "@types/koa-cors": "0.0.2",
+      "@types/koa-router": "^7.4.4",
       "@types/node": "^16.11.6",
+      "@types/redis": "^2.8.32",
       "@types/ws": "^8.2.0",
-      "ts-node": "^10.2.1",
-      "typescript": "^4.4.3"
+      "ts-node": "^10.2.1"
+      // "typescript": "^4.4.3"
     }
   }
 
@@ -241,6 +243,13 @@ Lockfile:
     version "1.2.4"
     resolved "https://registry.nlark.com/@types/range-parser/download/@types/range-parser-1.2.4.tgz#cd667bcfdd025213aafb7ca5915a932590acdcdc"
     integrity sha1-zWZ7z90CUhOq+3ylkVqTJZCs3Nw=
+  
+  "@types/redis@^2.8.32":
+    version "2.8.32"
+    resolved "https://registry.nlark.com/@types/redis/download/@types/redis-2.8.32.tgz#1d3430219afbee10f8cfa389dad2571a05ecfb11"
+    integrity sha1-HTQwIZr77hD4z6OJ2tJXGgXs+xE=
+    dependencies:
+      "@types/node" "*"
   
   "@types/serve-static@*":
     version "1.13.10"
@@ -449,6 +458,11 @@ Lockfile:
     integrity sha1-0dyXOSAxTfZ/vrlCI7TuNQI56Ws=
     dependencies:
       mimic-response "^1.0.0"
+  
+  cluster-key-slot@1.1.0:
+    version "1.1.0"
+    resolved "https://registry.npm.taobao.org/cluster-key-slot/download/cluster-key-slot-1.1.0.tgz#30474b2a981fb12172695833052bc0d01336d10d"
+    integrity sha1-MEdLKpgfsSFyaVgzBSvA0BM20Q0=
   
   co-body@^6.0.0:
     version "6.1.0"
@@ -713,6 +727,11 @@ Lockfile:
     version "1.1.1"
     resolved "https://registry.npm.taobao.org/function-bind/download/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
     integrity sha1-pWiZ0+o8m6uHS7l3O3xe3pL0iV0=
+  
+  generic-pool@3.8.2:
+    version "3.8.2"
+    resolved "https://registry.nlark.com/generic-pool/download/generic-pool-3.8.2.tgz#aab4f280adb522fdfbdc5e5b64d718d3683f04e9"
+    integrity sha1-qrTygK21Iv373F5bZNcY02g/BOk=
   
   get-intrinsic@^1.0.2:
     version "1.1.1"
@@ -1015,6 +1034,14 @@ Lockfile:
     resolved "https://registry.nlark.com/koa-cors/download/koa-cors-0.0.16.tgz#98107993a7909e34c042986c5ec6156d77f3432e"
     integrity sha1-mBB5k6eQnjTAQphsXsYVbXfzQy4=
   
+  koa-json-error@^3.1.2:
+    version "3.1.2"
+    resolved "https://registry.npm.taobao.org/koa-json-error/download/koa-json-error-3.1.2.tgz#acad750c6739cb12cc4ea6c25f224d59b765abfe"
+    integrity sha1-rK11DGc5yxLMTqbCXyJNWbdlq/4=
+    dependencies:
+      lodash.compact "^3.0.1"
+      lodash.curry "^4.1.1"
+  
   koa-router@^10.1.1:
     version "10.1.1"
     resolved "https://registry.nlark.com/koa-router/download/koa-router-10.1.1.tgz#20809f82648518b84726cd445037813cd99f17ff"
@@ -1061,6 +1088,16 @@ Lockfile:
     integrity sha1-EZ3+kI/jjRXfpD7NE/oS7Igy+s4=
     dependencies:
       package-json "^6.3.0"
+  
+  lodash.compact@^3.0.1:
+    version "3.0.1"
+    resolved "https://registry.npm.taobao.org/lodash.compact/download/lodash.compact-3.0.1.tgz#540ce3837745975807471e16b4a2ba21e7256ca5"
+    integrity sha1-VAzjg3dFl1gHRx4WtKK6IeclbKU=
+  
+  lodash.curry@^4.1.1:
+    version "4.1.1"
+    resolved "https://registry.npm.taobao.org/lodash.curry/download/lodash.curry-4.1.1.tgz#248e36072ede906501d75966200a86dab8b23170"
+    integrity sha1-JI42By7ekGUB11lmIAqG2riyMXA=
   
   lowercase-keys@^1.0.0, lowercase-keys@^1.0.1:
     version "1.0.1"
@@ -1328,6 +1365,28 @@ Lockfile:
     integrity sha1-dKNwvYVxFuJFspzJc0DNQxoCpsc=
     dependencies:
       picomatch "^2.2.1"
+  
+  redis-errors@^1.0.0:
+    version "1.2.0"
+    resolved "https://registry.nlark.com/redis-errors/download/redis-errors-1.2.0.tgz#eb62d2adb15e4eaf4610c04afe1529384250abad"
+    integrity sha1-62LSrbFeTq9GEMBK/hUpOEJQq60=
+  
+  redis-parser@3.0.0:
+    version "3.0.0"
+    resolved "https://registry.npm.taobao.org/redis-parser/download/redis-parser-3.0.0.tgz#b66d828cdcafe6b4b8a428a7def4c6bcac31c8b4"
+    integrity sha1-tm2CjNyv5rS4pCin3vTGvKwxyLQ=
+    dependencies:
+      redis-errors "^1.0.0"
+  
+  redis@^4.0.0-rc.3:
+    version "4.0.0-rc.3"
+    resolved "https://registry.npmmirror.com/redis/download/redis-4.0.0-rc.3.tgz?cache=0&sync_timestamp=1633998266793&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fredis%2Fdownload%2Fredis-4.0.0-rc.3.tgz#9cd9ef91b2f549550861cb2dc89cd7980598dcbb"
+    integrity sha1-nNnvkbL1SVUIYcstyJzXmAWY3Ls=
+    dependencies:
+      cluster-key-slot "1.1.0"
+      generic-pool "3.8.2"
+      redis-parser "3.0.0"
+      yallist "4.0.0"
   
   registry-auth-token@^4.0.0:
     version "4.2.1"
@@ -1676,7 +1735,7 @@ Lockfile:
     resolved "https://registry.nlark.com/xdg-basedir/download/xdg-basedir-4.0.0.tgz?cache=0&sync_timestamp=1628184822964&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fxdg-basedir%2Fdownload%2Fxdg-basedir-4.0.0.tgz#4bc8d9984403696225ef83a1573cbbcb4e79db13"
     integrity sha1-S8jZmEQDaWIl74OhVzy7y0552xM=
   
-  yallist@^4.0.0:
+  yallist@4.0.0, yallist@^4.0.0:
     version "4.0.0"
     resolved "https://registry.nlark.com/yallist/download/yallist-4.0.0.tgz#9bb92790d9c0effec63be73519e11a35019a3a72"
     integrity sha1-m7knkNnA7/7GO+c1GeEaNQGaOnI=

@@ -1,3 +1,4 @@
+"use strict";
 /*
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-11-07 18:45:47
@@ -11,12 +12,12 @@
 //   message:error,
 //   data:{}
 // }
-
-class Response {
-	constructor(code, message, data) {
-		this.code = code;
-		this.message = message;
-		this.data = data;
-	}
-}
+var Response = /** @class */ (function () {
+    function Response(code, message, data) {
+        this.code = code;
+        this.message = message;
+        this.data = data;
+    }
+    return Response;
+}());
 module.exports = Response;

@@ -2,10 +2,10 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-11-07 17:39:13
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-28 21:15:16
+ * @LastEditTime: 2021-11-29 12:39:31
  * @Description:
  */
-
+// @ts-nocheck
 // type ResultFn = (error: Error | null, data: any) => void;
 // @ts-nocheck
 const sql = require("./mysql");
@@ -14,6 +14,7 @@ module.exports = {
 	login(user_name, result) {
 		// 查找如果存在则直接返回如果不存在则新添加
 		return new Promise((resolve, reject) => {
+			console.log("user_name", user_name);
 			sql.query(
 				`select * from user where user_name='${user_name}'`,
 				(err, data) => {
@@ -21,24 +22,30 @@ module.exports = {
 						reject(err);
 					}
 					console.log(data);
-					if (data.length) {
+					if (data && data.length) {
 						resolve(data[0]);
 					} else {
 						// 新创建用户
 						sql.query(
 							`insert into user(user_name) values('${user_name}')`,
-							(err, data) => {
+							async (err, data) => {
 								if (err) {
 									reject(err);
 								}
+								console.log("新建用户: ", data.insertId);
 								// 每个用户都加入整个大群
-								this.addToBlock(1, data.insertId).catch(e => reject(e));
+								await this.addToBlock(data.insertId, 1).catch(e => reject(e));
+								// 默认加 千泷为好友
+								await this.addUserContacter(data.insertId, 1).catch(e =>
+									reject(e)
+								);
+
 								// 返回这条新创建的数据
 								resolve({
 									user_id: data.insertId,
 									user_name,
 									user_img:
-										"http://qianlon.cn/upload/2021/11/image-c571dd25ab744ff0a954fae2cfe5b61a.png",
+										"http://qianlon.cn/upload/2021/05/account-68d1701933c64aab96b345c98b70b080.jpeg",
 								});
 							}
 						);
@@ -135,15 +142,24 @@ from block, block_user where block.block_id=block_user.block_id and block_user.u
 	addChatMessage(message_id, from_user_id, to_user_id, message) {
 		return new Promise((resolve, reject) => {
 			console.log(message);
+			// 对 string 类型进行
+			if (typeof message == "string" && String.prototype.replaceAll) {
+				message.replaceAll(`'`, `\'`);
+				message.replaceAll(`"`, `\"`);
+			} else if (typeof message == "string" && String.prototype.replace) {
+				message.replace(`'`, `\'`);
+				message.replace(`"`, `\"`);
+			}
+
 			sql.query(
 				`
 					insert into user_contacter_message
 					(contacter_message_id,user_id,contacter_id,message)
 					values(
 						${message_id},
-						${from_user_id},
-						${to_user_id},
-						${message}
+						${from_user_id || 1},
+						${to_user_id || 2},
+						'${message}'
 					)
 				`,
 				(err, data) => {
