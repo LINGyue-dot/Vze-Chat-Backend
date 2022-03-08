@@ -25,8 +25,13 @@ export async function chatP2P(message: P2PMessageProp) {
       message.message
     );
     // TODO 更新 redis 会话列表，添加 / 上升会话
+    // 更新 from 的
     setEleToMaxScore(message.from_user_id, {
       contacter_id: message.to_user_id as string,
+    });
+    // 更新 to 的
+    setEleToMaxScore(message.to_user_id, {
+      contacter_id: message.from_user_id as string,
     });
 
     // 发送消息

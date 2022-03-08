@@ -92,6 +92,7 @@ export const getConfirmMessage = async (data: SendMessageProp) => {
 export const setEleToMaxScore = async (user_id: string, data: ChatRoomProp) => {
   const score = Date.now();
   await addZset(`conversation:chat_room_${user_id}`, score, data);
+
 };
 
 // 获取会话列表
