@@ -2,7 +2,7 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-11-07 17:39:13
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2022-03-08 21:21:22
+ * @LastEditTime: 2022-03-08 21:41:54
  * @Description:
  */
 // @ts-nocheck
@@ -45,7 +45,7 @@ module.exports = {
 									user_id: data.insertId,
 									user_name,
 									user_img:
-										"https://typora-1300781048.cos.ap-beijing.myqcloud.com/img/Snipaste_2022-03-08_21-21-05.png",
+										"http://blog.qianlon.cn/upload/2021/11/image-c571dd25ab744ff0a954fae2cfe5b61a.png",
 								});
 							}
 						);
