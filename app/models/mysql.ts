@@ -2,14 +2,14 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-11-07 16:55:36
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-11-29 19:36:01
+ * @LastEditTime: 2022-03-08 20:41:04
  * @Description:
  */
 // @ts-nocheck
 const mysql = require("mysql");
 
 const connection = mysql.createPool({
-	host: "120.27.242.14",
+	host: "175.24.185.110",
 	user: "vze",
 	password: "csz51628@+",
 	database: "vze_db",
