@@ -1,0 +1,23 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1
+  },
+  "1 info pnpm": {
+    "err": {
+      "name": "Error",
+      "message": "not found: o",
+      "code": "ENOENT",
+      "stack": "Error: not found: o\n    at getNotFoundError (/opt/homebrew/lib/node_modules/pnpm/dist/pnpm.cjs:21148:51)\n    at Function.whichSync [as sync] (/opt/homebrew/lib/node_modules/pnpm/dist/pnpm.cjs:21225:13)\n    at getCommandAbsolutePathSync (/opt/homebrew/lib/node_modules/pnpm/dist/pnpm.cjs:22903:44)\n    at default_1 (/opt/homebrew/lib/node_modules/pnpm/dist/pnpm.cjs:22912:32)\n    at /opt/homebrew/lib/node_modules/pnpm/dist/pnpm.cjs:184702:39"
+    }
+  },
+  "2 error pnpm": {
+    "code": "ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL",
+    "prefix": "/Users/qianlong/Desktop/code/Vze/Vze-Chat-Backend",
+    "err": {
+      "name": "pnpm",
+      "message": "not found: o",
+      "code": "ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL",
+      "stack": "Error: not found: o\n    at getNotFoundError (/opt/homebrew/lib/node_modules/pnpm/dist/pnpm.cjs:21148:51)\n    at Function.whichSync [as sync] (/opt/homebrew/lib/node_modules/pnpm/dist/pnpm.cjs:21225:13)\n    at getCommandAbsolutePathSync (/opt/homebrew/lib/node_modules/pnpm/dist/pnpm.cjs:22903:44)\n    at default_1 (/opt/homebrew/lib/node_modules/pnpm/dist/pnpm.cjs:22912:32)\n    at /opt/homebrew/lib/node_modules/pnpm/dist/pnpm.cjs:184702:39"
+    }
+  }
+}
